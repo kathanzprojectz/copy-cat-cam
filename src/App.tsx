@@ -9,6 +9,9 @@ import Language from "./pages/Language";
 import FoodPreferences from "./pages/FoodPreferences";
 import DietaryRestrictions from "./pages/DietaryRestrictions";
 import Lifestyle from "./pages/Lifestyle";
+import HealthGoals from "./pages/HealthGoals";
+import HouseholdSetup from "./pages/HouseholdSetup";
+import HomeDashboard from "./pages/HomeDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +30,9 @@ const App = () => (
           <Route path="/food-preferences" element={<FoodPreferences />} />
           <Route path="/dietary-restrictions" element={<DietaryRestrictions />} />
           <Route path="/lifestyle" element={<Lifestyle />} />
+          <Route path="/health-goals" element={<HealthGoals />} />
+          <Route path="/household" element={<HouseholdSetup />} />
+          <Route path="/home" element={<HomeDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

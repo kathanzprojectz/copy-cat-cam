@@ -90,7 +90,7 @@ const Lifestyle = () => {
 
       <div className="mt-auto pt-8">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/health-goals")}
           className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
         >
           Finish Setup
