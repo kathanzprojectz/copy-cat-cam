@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const tabs = [
   { icon: HomeIcon, label: "Home", path: "/home" },
-  { icon: CalendarDays, label: "Plan", path: "/home" },
-  { icon: Package, label: "Inventory", path: "/home" },
-  { icon: BookOpen, label: "Recipes", path: "/home" },
+  { icon: CalendarDays, label: "Plan", path: "/meal-plan" },
+  { icon: Package, label: "Inventory", path: "/inventory" },
+  { icon: BookOpen, label: "Recipes", path: "/recipe/1" },
   { icon: User, label: "Profile", path: "/home" },
 ];
 
@@ -17,7 +17,7 @@ const BottomNav = () => {
     <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border">
       <div className="max-w-md mx-auto flex justify-around py-2">
         {tabs.map((tab, i) => {
-          const active = i === 0 && location.pathname === "/home";
+          const active = location.pathname === tab.path || (tab.path === "/recipe/1" && location.pathname.startsWith("/recipe"));
           return (
             <button
               key={tab.label}
