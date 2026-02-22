@@ -6,7 +6,7 @@ const tabs = [
   { icon: CalendarDays, label: "Plan", path: "/meal-plan" },
   { icon: Package, label: "Inventory", path: "/inventory" },
   { icon: BookOpen, label: "Recipes", path: "/recipe/1" },
-  { icon: User, label: "Profile", path: "/home" },
+  { icon: User, label: "Profile", path: "/profile" },
 ];
 
 const BottomNav = () => {
