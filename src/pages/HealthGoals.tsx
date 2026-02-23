@@ -24,6 +24,11 @@ const HealthGoals = () => {
     set(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
   };
 
+  const handleContinue = () => {
+    localStorage.setItem("mealmate_calories", String(calories));
+    navigate("/household");
+  };
+
   return (
     <div className="app-container bg-background px-6 pt-6 pb-8 min-h-screen flex flex-col">
       <button onClick={() => navigate(-1)} className="mb-4 text-foreground">
@@ -87,7 +92,7 @@ const HealthGoals = () => {
 
       <div className="mt-auto pt-8">
         <button
-          onClick={() => navigate("/household")}
+          onClick={handleContinue}
           className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
         >
           Continue
