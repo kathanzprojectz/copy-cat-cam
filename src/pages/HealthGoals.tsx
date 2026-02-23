@@ -8,10 +8,22 @@ const goals = [
   { emoji: "❤️", name: "General Health" }, { emoji: "✨", name: "No Specific Goals" },
 ];
 
+const goalsHi = [
+  { emoji: "📉", name: "वज़न कम करना" }, { emoji: "💪", name: "मांसपेशियाँ बढ़ाना" },
+  { emoji: "⚖️", name: "वज़न बनाए रखना" }, { emoji: "⚡", name: "ऊर्जा बढ़ाना" },
+  { emoji: "❤️", name: "सामान्य स्वास्थ्य" }, { emoji: "✨", name: "कोई विशेष लक्ष्य नहीं" },
+];
+
 const nutrition = [
   { emoji: "🥩", name: "High Protein" }, { emoji: "🥦", name: "Low Carb" },
   { emoji: "🥑", name: "Low Fat" }, { emoji: "⚖️", name: "Balanced" },
   { emoji: "🌾", name: "Fiber Rich" }, { emoji: "🍽️", name: "No Preference" },
+];
+
+const nutritionHi = [
+  { emoji: "🥩", name: "अधिक प्रोटीन" }, { emoji: "🥦", name: "कम कार्ब" },
+  { emoji: "🥑", name: "कम वसा" }, { emoji: "⚖️", name: "संतुलित" },
+  { emoji: "🌾", name: "फ़ाइबर युक्त" }, { emoji: "🍽️", name: "कोई वरीयता नहीं" },
 ];
 
 const HealthGoals = () => {
@@ -19,6 +31,12 @@ const HealthGoals = () => {
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
   const [selectedNutrition, setSelectedNutrition] = useState<string[]>([]);
   const [calories, setCalories] = useState(1200);
+
+  const lang = localStorage.getItem("mealmate_language") || "English";
+  const isHindi = lang === "Hindi";
+
+  const goalsList = isHindi ? goalsHi : goals;
+  const nutritionList = isHindi ? nutritionHi : nutrition;
 
   const toggle = (arr: string[], set: React.Dispatch<React.SetStateAction<string[]>>, val: string) => {
     set(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
@@ -35,14 +53,22 @@ const HealthGoals = () => {
         <ArrowLeft className="w-6 h-6" />
       </button>
 
-      <h1 className="text-2xl font-bold text-foreground mb-1">Health Goals</h1>
-      <p className="text-muted-foreground mb-6">What are your health and nutrition goals?</p>
+      <h1 className="text-2xl font-bold text-foreground mb-1">
+        {isHindi ? "स्वास्थ्य लक्ष्य" : "Health Goals"}
+      </h1>
+      <p className="text-muted-foreground mb-6">
+        {isHindi ? "आपके स्वास्थ्य और पोषण लक्ष्य क्या हैं?" : "What are your health and nutrition goals?"}
+      </p>
 
       <div className="animate-fade-in">
-        <h2 className="text-lg font-bold text-foreground mb-1">Primary Goals</h2>
-        <p className="text-sm text-muted-foreground mb-3">Select all that apply</p>
+        <h2 className="text-lg font-bold text-foreground mb-1">
+          {isHindi ? "प्राथमिक लक्ष्य" : "Primary Goals"}
+        </h2>
+        <p className="text-sm text-muted-foreground mb-3">
+          {isHindi ? "सभी लागू विकल्प चुनें" : "Select all that apply"}
+        </p>
         <div className="flex flex-wrap gap-2 mb-8">
-          {goals.map((g) => (
+          {goalsList.map((g) => (
             <button
               key={g.name}
               onClick={() => toggle(selectedGoals, setSelectedGoals, g.name)}
@@ -55,10 +81,14 @@ const HealthGoals = () => {
           ))}
         </div>
 
-        <h2 className="text-lg font-bold text-foreground mb-1">Nutrition Focus</h2>
-        <p className="text-sm text-muted-foreground mb-3">Select your macronutrient preferences</p>
+        <h2 className="text-lg font-bold text-foreground mb-1">
+          {isHindi ? "पोषण फ़ोकस" : "Nutrition Focus"}
+        </h2>
+        <p className="text-sm text-muted-foreground mb-3">
+          {isHindi ? "अपनी मैक्रोन्यूट्रिएंट वरीयता चुनें" : "Select your macronutrient preferences"}
+        </p>
         <div className="flex flex-wrap gap-2 mb-8">
-          {nutrition.map((n) => (
+          {nutritionList.map((n) => (
             <button
               key={n.name}
               onClick={() => toggle(selectedNutrition, setSelectedNutrition, n.name)}
@@ -71,11 +101,15 @@ const HealthGoals = () => {
           ))}
         </div>
 
-        <h2 className="text-lg font-bold text-foreground mb-1">Daily Calorie Target</h2>
-        <p className="text-sm text-muted-foreground mb-3">Set your daily calorie goal</p>
+        <h2 className="text-lg font-bold text-foreground mb-1">
+          {isHindi ? "दैनिक कैलोरी लक्ष्य" : "Daily Calorie Target"}
+        </h2>
+        <p className="text-sm text-muted-foreground mb-3">
+          {isHindi ? "अपना दैनिक कैलोरी लक्ष्य सेट करें" : "Set your daily calorie goal"}
+        </p>
         <div className="bg-secondary rounded-2xl p-5">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-muted-foreground">Calories per day</span>
+            <span className="text-muted-foreground">{isHindi ? "प्रतिदिन कैलोरी" : "Calories per day"}</span>
             <span className="text-lg font-bold text-foreground">{calories} cal</span>
           </div>
           <input
@@ -95,7 +129,7 @@ const HealthGoals = () => {
           onClick={handleContinue}
           className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
         >
-          Continue
+          {isHindi ? "जारी रखें" : "Continue"}
         </button>
       </div>
     </div>

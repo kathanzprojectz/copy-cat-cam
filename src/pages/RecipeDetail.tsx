@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Heart, Share2, Play, Clock, ChefHat, Users, Flame, Minus, Plus, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Heart, Share2, Play, Clock, ChefHat, Users, Flame, Minus, Plus, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import pastaImg from "@/assets/pasta-recipe.jpg";
+
+const RECIPE_VIDEO_URL = "https://www.youtube.com/watch?v=bJUiWdM__Qw";
 
 const nutritionFacts = [
   { label: "Protein", value: "18g" },
@@ -12,14 +14,14 @@ const nutritionFacts = [
 ];
 
 const ingredients = [
-  { name: "Pasta (spaghetti or linguine)", amount: "400g", available: true },
-  { name: "Heavy cream", amount: "1 cup", available: true },
-  { name: "Garlic cloves", amount: "6 cloves", available: true },
-  { name: "Parmesan cheese", amount: "1 cup", available: true },
-  { name: "Butter", amount: "3 tbsp", available: true },
-  { name: "Olive oil", amount: "2 tbsp", available: true },
-  { name: "Fresh parsley", amount: "1/4 cup", available: false },
-  { name: "Red pepper flakes", amount: "1/2 tsp", available: false },
+  { name: "Pasta (spaghetti or linguine)", amount: "400g", available: true, calories: 560, protein: "19g", carbs: "110g", fat: "2.4g", fiber: "4g" },
+  { name: "Heavy cream", amount: "1 cup", available: true, calories: 340, protein: "2.8g", carbs: "3.3g", fat: "36g", fiber: "0g" },
+  { name: "Garlic cloves", amount: "6 cloves", available: true, calories: 27, protein: "1.1g", carbs: "6g", fat: "0.1g", fiber: "0.4g" },
+  { name: "Parmesan cheese", amount: "1 cup", available: true, calories: 431, protein: "38g", carbs: "3.7g", fat: "29g", fiber: "0g" },
+  { name: "Butter", amount: "3 tbsp", available: true, calories: 306, protein: "0.4g", carbs: "0g", fat: "34.5g", fiber: "0g" },
+  { name: "Olive oil", amount: "2 tbsp", available: true, calories: 239, protein: "0g", carbs: "0g", fat: "27g", fiber: "0g" },
+  { name: "Fresh parsley", amount: "1/4 cup", available: false, calories: 5, protein: "0.5g", carbs: "0.9g", fat: "0.1g", fiber: "0.5g" },
+  { name: "Red pepper flakes", amount: "1/2 tsp", available: false, calories: 3, protein: "0.1g", carbs: "0.5g", fat: "0.2g", fiber: "0.3g" },
 ];
 
 const steps = [
@@ -38,6 +40,7 @@ const RecipeDetail = () => {
   const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const [servings, setServings] = useState(1);
+  const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
   const availableCount = ingredients.filter((i) => i.available).length;
 
   return (
@@ -56,11 +59,14 @@ const RecipeDetail = () => {
             <Share2 className="w-5 h-5 text-foreground" />
           </button>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
+        <button
+          onClick={() => window.open(RECIPE_VIDEO_URL, "_blank")}
+          className="absolute inset-0 flex items-center justify-center"
+        >
           <div className="w-16 h-16 rounded-full bg-card/80 backdrop-blur flex items-center justify-center">
             <Play className="w-7 h-7 text-primary ml-1" />
           </div>
-        </div>
+        </button>
       </div>
 
       <div className="px-6 pt-5">
@@ -81,7 +87,10 @@ const RecipeDetail = () => {
         {/* Nutrition */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-foreground">Nutrition Facts</h2>
-          <button className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
+          <button
+            onClick={() => window.open(RECIPE_VIDEO_URL, "_blank")}
+            className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium"
+          >
             <Play className="w-3.5 h-3.5" /> Video
           </button>
         </div>
@@ -133,24 +142,63 @@ const RecipeDetail = () => {
 
         <div className="border-2 border-dashed border-primary/40 rounded-2xl p-4 mb-4">
           <p className="text-primary text-sm">
-            You're missing {ingredients.length - availableCount} ingredients. They're highlighted below in warm brown.
+            You're missing {ingredients.length - availableCount} ingredients. Tap each ingredient to see its nutrition details.
           </p>
         </div>
 
         <div className="bg-secondary rounded-2xl divide-y divide-border mb-8">
-          {ingredients.map((ing) => (
-            <div key={ing.name} className="px-4 py-3.5 flex items-center gap-3">
-              {ing.available ? (
-                <CheckCircle2 className="w-6 h-6 text-green-500 shrink-0" />
-              ) : (
-                <div className="w-6 h-6 rounded-full border-2 border-primary shrink-0" />
-              )}
-              <div>
-                <p className={`font-semibold ${ing.available ? "text-foreground" : "text-primary"}`}>{ing.name}</p>
-                <p className="text-sm text-muted-foreground">{ing.amount}</p>
+          {ingredients.map((ing) => {
+            const isExpanded = expandedIngredient === ing.name;
+            return (
+              <div key={ing.name}>
+                <button
+                  onClick={() => setExpandedIngredient(isExpanded ? null : ing.name)}
+                  className="w-full px-4 py-3.5 flex items-center gap-3"
+                >
+                  {ing.available ? (
+                    <CheckCircle2 className="w-6 h-6 text-green-500 shrink-0" />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full border-2 border-primary shrink-0" />
+                  )}
+                  <div className="flex-1 text-left">
+                    <p className={`font-semibold ${ing.available ? "text-foreground" : "text-primary"}`}>{ing.name}</p>
+                    <p className="text-sm text-muted-foreground">{ing.amount}</p>
+                  </div>
+                  {isExpanded ? (
+                    <ChevronUp className="w-4 h-4 text-muted-foreground shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+                  )}
+                </button>
+                {isExpanded && (
+                  <div className="px-4 pb-3 ml-9">
+                    <div className="bg-card rounded-xl p-3 grid grid-cols-2 gap-2">
+                      <div className="flex justify-between">
+                        <span className="text-xs text-muted-foreground">Calories</span>
+                        <span className="text-xs font-bold text-foreground">{ing.calories}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-xs text-muted-foreground">Protein</span>
+                        <span className="text-xs font-bold text-foreground">{ing.protein}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-xs text-muted-foreground">Carbs</span>
+                        <span className="text-xs font-bold text-foreground">{ing.carbs}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-xs text-muted-foreground">Fat</span>
+                        <span className="text-xs font-bold text-foreground">{ing.fat}</span>
+                      </div>
+                      <div className="flex justify-between col-span-2">
+                        <span className="text-xs text-muted-foreground">Fiber</span>
+                        <span className="text-xs font-bold text-foreground">{ing.fiber}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Instructions */}
@@ -167,7 +215,10 @@ const RecipeDetail = () => {
         </div>
 
         {/* Action buttons */}
-        <button className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform mb-3">
+        <button
+          onClick={() => navigate("/meal-plan")}
+          className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform mb-3"
+        >
           Add to Meal Plan
         </button>
         <button className="w-full py-4 rounded-2xl bg-secondary font-semibold text-foreground active:scale-[0.98] transition-transform mb-4">

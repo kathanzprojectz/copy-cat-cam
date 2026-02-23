@@ -2,23 +2,44 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-const cookingTimes = [
+const cookingTimesEn = [
   { emoji: "⚡", label: "15 min or less" }, { emoji: "⏲️", label: "15-30 min" },
   { emoji: "⏰", label: "30-45 min" }, { emoji: "🕐", label: "45-60 min" },
   { emoji: "🔍", label: "60+ min" },
 ];
-const mealsPerDay = [
+const cookingTimesHi = [
+  { emoji: "⚡", label: "15 मिनट या कम" }, { emoji: "⏲️", label: "15-30 मिनट" },
+  { emoji: "⏰", label: "30-45 मिनट" }, { emoji: "🕐", label: "45-60 मिनट" },
+  { emoji: "🔍", label: "60+ मिनट" },
+];
+
+const mealsPerDayEn = [
   { emoji: "🍽️", label: "1 meal" }, { emoji: "🍽️🍽️", label: "2 meals" },
   { emoji: "🍽️🍽️🍽️", label: "3 meals" }, { emoji: "🍽️+", label: "4+ meals" },
 ];
-const frequencies = [
+const mealsPerDayHi = [
+  { emoji: "🍽️", label: "1 भोजन" }, { emoji: "🍽️🍽️", label: "2 भोजन" },
+  { emoji: "🍽️🍽️🍽️", label: "3 भोजन" }, { emoji: "🍽️+", label: "4+ भोजन" },
+];
+
+const frequenciesEn = [
   { emoji: "📅", label: "Daily" }, { emoji: "📆", label: "4-5 times/week" },
   { emoji: "📋", label: "2-3 times/week" }, { emoji: "📄", label: "Weekly" },
   { emoji: "🌙", label: "Rarely" },
 ];
-const mealTypes = [
+const frequenciesHi = [
+  { emoji: "📅", label: "रोज़ाना" }, { emoji: "📆", label: "सप्ताह में 4-5 बार" },
+  { emoji: "📋", label: "सप्ताह में 2-3 बार" }, { emoji: "📄", label: "साप्ताहिक" },
+  { emoji: "🌙", label: "कभी-कभी" },
+];
+
+const mealTypesEn = [
   { emoji: "🌅", label: "Breakfast" }, { emoji: "☀️", label: "Lunch" },
   { emoji: "🌆", label: "Dinner" }, { emoji: "🍿", label: "Snacks" },
+];
+const mealTypesHi = [
+  { emoji: "🌅", label: "नाश्ता" }, { emoji: "☀️", label: "दोपहर का खाना" },
+  { emoji: "🌆", label: "रात का खाना" }, { emoji: "🍿", label: "स्नैक्स" },
 ];
 
 type SectionProps = { title: string; items: { emoji: string; label: string }[]; selected: string; onSelect: (v: string) => void };
@@ -68,6 +89,14 @@ const Lifestyle = () => {
   const [freq, setFreq] = useState("");
   const [mealTypesSelected, setMealTypesSelected] = useState<string[]>([]);
 
+  const lang = localStorage.getItem("mealmate_language") || "English";
+  const isHindi = lang === "Hindi";
+
+  const cookingTimes = isHindi ? cookingTimesHi : cookingTimesEn;
+  const mealsPerDay = isHindi ? mealsPerDayHi : mealsPerDayEn;
+  const frequencies = isHindi ? frequenciesHi : frequenciesEn;
+  const mealTypes = isHindi ? mealTypesHi : mealTypesEn;
+
   const toggleMealType = (v: string) => {
     setMealTypesSelected((prev) => prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]);
   };
@@ -78,14 +107,18 @@ const Lifestyle = () => {
         <ArrowLeft className="w-6 h-6" />
       </button>
 
-      <h1 className="text-2xl font-bold text-foreground mb-1">Lifestyle & Routine</h1>
-      <p className="text-muted-foreground mb-6">Tell us about your cooking habits</p>
+      <h1 className="text-2xl font-bold text-foreground mb-1">
+        {isHindi ? "जीवनशैली और दिनचर्या" : "Lifestyle & Routine"}
+      </h1>
+      <p className="text-muted-foreground mb-6">
+        {isHindi ? "अपनी खाना पकाने की आदतों के बारे में बताएँ" : "Tell us about your cooking habits"}
+      </p>
 
       <div className="animate-fade-in">
-        <Section title="Cooking Time Available" items={cookingTimes} selected={cookTime} onSelect={setCookTime} />
-        <Section title="Meals Per Day" items={mealsPerDay} selected={meals} onSelect={setMeals} />
-        <Section title="Cooking Frequency" items={frequencies} selected={freq} onSelect={setFreq} />
-        <MultiSection title="Which Meals Do You Cook?" items={mealTypes} selected={mealTypesSelected} onToggle={toggleMealType} />
+        <Section title={isHindi ? "खाना पकाने का समय" : "Cooking Time Available"} items={cookingTimes} selected={cookTime} onSelect={setCookTime} />
+        <Section title={isHindi ? "प्रतिदिन भोजन" : "Meals Per Day"} items={mealsPerDay} selected={meals} onSelect={setMeals} />
+        <Section title={isHindi ? "खाना पकाने की आवृत्ति" : "Cooking Frequency"} items={frequencies} selected={freq} onSelect={setFreq} />
+        <MultiSection title={isHindi ? "कौन से भोजन बनाते हैं?" : "Which Meals Do You Cook?"} items={mealTypes} selected={mealTypesSelected} onToggle={toggleMealType} />
       </div>
 
       <div className="mt-auto pt-8">
@@ -93,7 +126,7 @@ const Lifestyle = () => {
           onClick={() => navigate("/health-goals")}
           className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
         >
-          Finish Setup
+          {isHindi ? "सेटअप पूरा करें" : "Finish Setup"}
         </button>
       </div>
     </div>
