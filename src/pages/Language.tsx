@@ -17,6 +17,11 @@ const Language = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("English");
 
+  const handleContinue = () => {
+    localStorage.setItem("mealmate_language", selected);
+    navigate("/food-preferences");
+  };
+
   return (
     <div className="app-container flex flex-col items-center bg-background px-6 pt-12 pb-8 min-h-screen">
       <div className="w-20 h-20 rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
@@ -53,10 +58,10 @@ const Language = () => {
 
       <div className="mt-auto pt-8 w-full">
         <button
-          onClick={() => navigate("/food-preferences")}
+          onClick={handleContinue}
           className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
         >
-          Continue
+          {selected === "Hindi" ? "जारी रखें" : "Continue"}
         </button>
       </div>
     </div>
