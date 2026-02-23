@@ -15,6 +15,11 @@ const flavors = [
   { emoji: "🍋", name: "Tangy" }, { emoji: "🥛", name: "Mild" }, { emoji: "🍄", name: "Umami" },
 ];
 
+const dietTypes = [
+  { emoji: "🥗", name: "Vegetarian" }, { emoji: "🍗", name: "Non-Vegetarian" },
+  { emoji: "🌱", name: "Vegan" }, { emoji: "🥚", name: "Eggetarian" },
+];
+
 const SelectableChip = ({ emoji, name, selected, onClick }: { emoji: string; name: string; selected: boolean; onClick: () => void }) => (
   <button
     onClick={onClick}
@@ -33,6 +38,7 @@ const FoodPreferences = () => {
   const navigate = useNavigate();
   const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
   const [selectedFlavors, setSelectedFlavors] = useState<string[]>([]);
+  const [selectedDiet, setSelectedDiet] = useState<string[]>([]);
 
   const toggle = (arr: string[], set: React.Dispatch<React.SetStateAction<string[]>>, val: string) => {
     set(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
@@ -48,6 +54,14 @@ const FoodPreferences = () => {
       <p className="text-muted-foreground mb-6">Select your favorite cuisines and flavor profiles</p>
 
       <div className="animate-fade-in">
+        <h2 className="text-lg font-bold text-foreground mb-1">Diet Preference</h2>
+        <p className="text-sm text-muted-foreground mb-3">Select your diet type</p>
+        <div className="flex flex-wrap gap-2 mb-8">
+          {dietTypes.map((d) => (
+            <SelectableChip key={d.name} {...d} selected={selectedDiet.includes(d.name)} onClick={() => toggle(selectedDiet, setSelectedDiet, d.name)} />
+          ))}
+        </div>
+
         <h2 className="text-lg font-bold text-foreground mb-1">Favorite Cuisines</h2>
         <p className="text-sm text-muted-foreground mb-3">Select at least 1</p>
         <div className="flex flex-wrap gap-2 mb-8">
