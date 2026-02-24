@@ -45,6 +45,7 @@ const HomeDashboard = () => {
     { icon: Package, title: "Inventory", desc: "Manage your fridge", path: "/inventory" },
     { icon: Sparkles, title: "AI Suggestions", desc: "Get recipe ideas", path: "/recipe/1" },
     { icon: BookOpen, title: "Recipes", desc: "Browse collection", path: "/recipe/1" },
+    { icon: Users, title: "Household Vote", desc: "Vote on meals", path: "/household-voting" },
   ];
 
   return (
@@ -138,7 +139,7 @@ const HomeDashboard = () => {
         </div>
         <p className="text-sm text-muted-foreground mb-4">Your flatmates are deciding on tomorrow's dinner</p>
         <button
-          onClick={() => navigate("/meal-plan")}
+          onClick={() => navigate("/household-voting")}
           className="w-full py-3.5 rounded-2xl border border-border font-semibold text-foreground active:scale-[0.98] transition-transform"
         >
           Cast Your Vote

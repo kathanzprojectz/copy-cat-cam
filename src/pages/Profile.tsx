@@ -15,11 +15,11 @@ const preferences = [
 ];
 
 const settings = [
-  { icon: Users, label: "Household Members" },
-  { icon: Bell, label: "Notifications" },
-  { icon: Globe, label: "Language" },
-  { icon: Settings, label: "App Settings" },
-  { icon: HelpCircle, label: "Help & Support" },
+  { icon: Users, label: "Household Members", path: "/household" },
+  { icon: Bell, label: "Notifications", path: null },
+  { icon: Globe, label: "Language", path: "/language" },
+  { icon: Settings, label: "App Settings", path: null },
+  { icon: HelpCircle, label: "Help & Support", path: null },
 ];
 
 const Profile = () => {
@@ -68,7 +68,15 @@ const Profile = () => {
         <h2 className="text-lg font-bold text-foreground mb-3">Your Preferences</h2>
         <div className="bg-card rounded-3xl divide-y divide-border mb-8">
           {preferences.map((p) => (
-            <button key={p.label} className="w-full flex items-center gap-4 px-5 py-4">
+            <button
+              key={p.label}
+              onClick={() => {
+                if (p.label === "Diet Type") navigate("/food-preferences");
+                if (p.label === "Allergies") navigate("/dietary-restrictions");
+                if (p.label === "Cooking Level") navigate("/lifestyle");
+              }}
+              className="w-full flex items-center gap-4 px-5 py-4"
+            >
               <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center">
                 <p.icon className="w-5 h-5 text-primary" />
               </div>
@@ -85,7 +93,11 @@ const Profile = () => {
         <h2 className="text-lg font-bold text-foreground mb-3">Settings</h2>
         <div className="bg-card rounded-3xl divide-y divide-border mb-6">
           {settings.map((s) => (
-            <button key={s.label} className="w-full flex items-center gap-4 px-5 py-5">
+            <button
+              key={s.label}
+              onClick={() => s.path && navigate(s.path)}
+              className="w-full flex items-center gap-4 px-5 py-5"
+            >
               <s.icon className="w-5 h-5 text-primary" />
               <span className="flex-1 text-left font-medium text-foreground">{s.label}</span>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
