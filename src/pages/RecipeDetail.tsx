@@ -41,6 +41,7 @@ const RecipeDetail = () => {
   const [liked, setLiked] = useState(false);
   const [servings, setServings] = useState(1);
   const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
+  const [isCooking, setIsCooking] = useState(false);
   const availableCount = ingredients.filter((i) => i.available).length;
 
   return (
@@ -221,8 +222,34 @@ const RecipeDetail = () => {
         >
           Add to Meal Plan
         </button>
-        <button className="w-full py-4 rounded-2xl bg-secondary font-semibold text-foreground active:scale-[0.98] transition-transform mb-4">
-          Start Cooking Timer
+        <button
+          onClick={() => {
+            setIsCooking(!isCooking);
+            if (!isCooking) {
+              // Reduce inventory for available ingredients
+              const stored = localStorage.getItem("mealmate_inventory");
+              const inv: { name: string; qty: number }[] = stored ? JSON.parse(stored) : [];
+              const updated = [...inv];
+              ingredients.filter(i => i.available).forEach(ing => {
+                const idx = updated.findIndex(item => item.name.toLowerCase().includes(ing.name.split(" ")[0].toLowerCase()));
+                if (idx !== -1) updated[idx].qty = Math.max(0, updated[idx].qty - 1);
+              });
+              localStorage.setItem("mealmate_inventory", JSON.stringify(updated));
+            }
+          }}
+          className={`w-full py-4 rounded-2xl font-semibold text-lg active:scale-[0.98] transition-transform mb-3 flex items-center justify-center gap-2 ${
+            isCooking
+              ? "bg-primary/15 text-primary border-2 border-primary"
+              : "bg-secondary text-foreground"
+          }`}
+        >
+          {isCooking ? "✅ Marked as Cooking" : "🍳 I'm Making This"}
+        </button>
+        <button
+          onClick={() => window.open(RECIPE_VIDEO_URL, "_blank")}
+          className="w-full py-4 rounded-2xl bg-secondary font-semibold text-foreground active:scale-[0.98] transition-transform mb-4 flex items-center justify-center gap-2"
+        >
+          <Play className="w-5 h-5" /> Watch Cooking Video
         </button>
       </div>
 

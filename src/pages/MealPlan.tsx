@@ -24,12 +24,54 @@ const initialWeekDays = [
       { type: "dinner", icon: "🌙", label: "Dinner", name: "Thai Green Curry", cal: 580 },
     ],
   },
-  { day: "Tue", date: 19, calories: 1350, total: 2000, meals: [{ type: "breakfast", icon: "☀️", label: "Breakfast", name: "Oatmeal Bowl", cal: 290 }] },
-  { day: "Wed", date: 20, calories: 1500, total: 2000, meals: [{ type: "breakfast", icon: "☀️", label: "Breakfast", name: "Smoothie", cal: 220 }] },
-  { day: "Thu", date: 21, calories: 1200, total: 2000, meals: [{ type: "breakfast", icon: "☀️", label: "Breakfast", name: "Eggs Benedict", cal: 450 }] },
-  { day: "Fri", date: 22, calories: 1100, total: 2000, meals: [{ type: "breakfast", icon: "☀️", label: "Breakfast", name: "French Toast", cal: 380 }] },
-  { day: "Sat", date: 23, calories: 1140, total: 2000, meals: [{ type: "breakfast", icon: "☀️", label: "Breakfast", name: "Smoothie Bowl", cal: 310 }] },
-  { day: "Sun", date: 24, calories: 1400, total: 2000, meals: [{ type: "breakfast", icon: "☀️", label: "Breakfast", name: "Pancakes", cal: 420 }] },
+  {
+    day: "Tue", date: 19, calories: 1350, total: 2000,
+    meals: [
+      { type: "breakfast", icon: "☀️", label: "Breakfast", name: "Oatmeal Bowl", cal: 290 },
+      { type: "lunch", icon: "🌤️", label: "Lunch", name: "Grilled Chicken Wrap", cal: 450 },
+      { type: "dinner", icon: "🌙", label: "Dinner", name: "Butter Chicken", cal: 610 },
+    ],
+  },
+  {
+    day: "Wed", date: 20, calories: 1500, total: 2000,
+    meals: [
+      { type: "breakfast", icon: "☀️", label: "Breakfast", name: "Smoothie", cal: 220 },
+      { type: "lunch", icon: "🌤️", label: "Lunch", name: "Quinoa Bowl", cal: 410 },
+      { type: "dinner", icon: "🌙", label: "Dinner", name: "Pasta Primavera", cal: 520 },
+    ],
+  },
+  {
+    day: "Thu", date: 21, calories: 1200, total: 2000,
+    meals: [
+      { type: "breakfast", icon: "☀️", label: "Breakfast", name: "Eggs Benedict", cal: 450 },
+      { type: "lunch", icon: "🌤️", label: "Lunch", name: "Poke Bowl", cal: 390 },
+      { type: "dinner", icon: "🌙", label: "Dinner", name: "Grilled Salmon", cal: 480 },
+    ],
+  },
+  {
+    day: "Fri", date: 22, calories: 1100, total: 2000,
+    meals: [
+      { type: "breakfast", icon: "☀️", label: "Breakfast", name: "French Toast", cal: 380 },
+      { type: "lunch", icon: "🌤️", label: "Lunch", name: "Falafel Plate", cal: 420 },
+      { type: "dinner", icon: "🌙", label: "Dinner", name: "Stir-Fry Noodles", cal: 490 },
+    ],
+  },
+  {
+    day: "Sat", date: 23, calories: 1140, total: 2000,
+    meals: [
+      { type: "breakfast", icon: "☀️", label: "Breakfast", name: "Smoothie Bowl", cal: 310 },
+      { type: "lunch", icon: "🌤️", label: "Lunch", name: "Veggie Wrap", cal: 350 },
+      { type: "dinner", icon: "🌙", label: "Dinner", name: "Mushroom Risotto", cal: 550 },
+    ],
+  },
+  {
+    day: "Sun", date: 24, calories: 1400, total: 2000,
+    meals: [
+      { type: "breakfast", icon: "☀️", label: "Breakfast", name: "Pancakes", cal: 420 },
+      { type: "lunch", icon: "🌤️", label: "Lunch", name: "Chicken Biryani", cal: 520 },
+      { type: "dinner", icon: "🌙", label: "Dinner", name: "Grilled Chicken", cal: 460 },
+    ],
+  },
 ];
 
 const MealPlan = () => {

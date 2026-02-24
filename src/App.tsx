@@ -13,6 +13,7 @@ import HealthGoals from "./pages/HealthGoals";
 import HouseholdSetup from "./pages/HouseholdSetup";
 import HomeDashboard from "./pages/HomeDashboard";
 import MealPlan from "./pages/MealPlan";
+import HouseholdVoting from "./pages/HouseholdVoting";
 import Inventory from "./pages/Inventory";
 import RecipeDetail from "./pages/RecipeDetail";
 import Profile from "./pages/Profile";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/household" element={<HouseholdSetup />} />
           <Route path="/home" element={<HomeDashboard />} />
           <Route path="/meal-plan" element={<MealPlan />} />
+          <Route path="/household-voting" element={<HouseholdVoting />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />} />
